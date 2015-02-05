@@ -23,9 +23,7 @@
         </div>
       </div>
       <div class="row" id="instafeed" style="padding-top:20px;">
-        <div class="col-xs-12">
-          User photo should load here
-        </div>
+        User photo should load here
       </div>
     </div>  
   <div class="container-fluid">
@@ -46,8 +44,17 @@
               myToken = myToken[1];
               console.log(myToken);
               
-              function createHtml () {
+              function createHtml (data) {
                 console.log("createHtml function fired");
+                data = data.data; 
+                for (var i = 0; i < data.length; i++) {
+                  console.log(data[i]);
+                  var image = data[i].images.standard_resolution.url
+                  imageHolder.append('<image src="' + image + '"/>');
+                  imageHolder.append(data[i]);
+                  console.log(image);
+                }
+                
               }
               
               
@@ -58,9 +65,7 @@
                     dataType: 'jsonp',
                     success: function(json) {
                       console.log("Data has been loaded from Instagram"); 
-                      var allPhotos = json.data;
-                      console.log(allPhotos);
-                      createHtml(allPhotos);
+                      createHtml(json);
                     },
                     error:  function(error) {
                       console.log(error);
@@ -71,8 +76,6 @@
               getData();
          });
       </script>
-
-
 
 </body>
 </html>
